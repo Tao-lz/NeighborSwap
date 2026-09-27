@@ -106,13 +106,18 @@ onMounted(() => {
   gap: 16px;
   padding: 12px;
   background: #fff;
-  border-radius: 6px;
+  border-radius: 10px;
   cursor: pointer;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+.want-item:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
 }
 .thumb {
   width: 56px;
   height: 56px;
-  border-radius: 4px;
+  border-radius: 8px;
   flex-shrink: 0;
 }
 .thumb-ph {

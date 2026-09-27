@@ -1,5 +1,12 @@
 <template>
   <div class="home">
+    <div class="top">
+      <div class="title">正在流转的闲置 <span class="count">{{ items.length }} 件</span></div>
+      <el-button type="primary" @click="$router.push('/publish')">
+        <el-icon style="margin-right: 4px"><Plus /></el-icon>发布闲置
+      </el-button>
+    </div>
+
     <div class="toolbar">
       <el-input
         v-model="q"
@@ -67,19 +74,50 @@ onMounted(fetchItems)
 </script>
 
 <style scoped>
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f2937;
+}
+.count {
+  font-size: 13px;
+  font-weight: 400;
+  color: #9ca3af;
+  margin-left: 6px;
+}
 .toolbar {
   display: flex;
   gap: 16px;
   margin-bottom: 20px;
   align-items: center;
+  flex-wrap: wrap;
 }
 .search {
-  max-width: 360px;
+  flex: 1;
+  min-width: 240px;
+  max-width: 420px;
 }
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   gap: 16px;
   min-height: 200px;
+}
+@media (max-width: 640px) {
+  .top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .search {
+    max-width: none;
+    width: 100%;
+  }
 }
 </style>

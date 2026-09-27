@@ -1,7 +1,13 @@
 <template>
   <el-card class="item-card" shadow="hover" @click="$emit('click')">
     <div class="img-box">
-      <el-image v-if="item.image_url" :src="item.image_url" fit="cover" class="img" />
+      <el-image
+        v-if="item.image_url"
+        :src="item.image_url"
+        fit="cover"
+        class="img"
+        :class="{ 'img-dim': item.status === 'given' }"
+      />
       <div v-else class="img img-placeholder">无图</div>
       <div class="freshness"><FreshnessTag :created-at="item.created_at" /></div>
       <el-tag v-if="item.status === 'given'" type="info" class="given-tag">已送出</el-tag>
@@ -11,9 +17,9 @@
       <div class="desc">{{ item.description }}</div>
       <div class="meta">
         <span class="price" :class="{ free: item.trade_type !== 'priced' }">{{ priceText }}</span>
-        <span class="want">{{ item.want_count }} 人想要</span>
+        <span class="want">❤ {{ item.want_count }} 人想要</span>
       </div>
-      <div class="owner">发布者：{{ item.owner_nickname }}</div>
+      <div class="owner">👤 {{ item.owner_nickname }}</div>
     </div>
   </el-card>
 </template>
@@ -35,18 +41,32 @@ const priceText = computed(() => {
 <style scoped>
 .item-card {
   cursor: pointer;
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.item-card:hover {
+  transform: translateY(-4px);
 }
 .img-box {
   position: relative;
   height: 160px;
   background: #f5f5f5;
-  border-radius: 4px;
   overflow: hidden;
 }
 .img {
   width: 100%;
   height: 100%;
   display: block;
+  transition: transform 0.35s ease;
+}
+.item-card:hover .img {
+  transform: scale(1.05);
+}
+.img-dim {
+  filter: grayscale(0.6);
+  opacity: 0.7;
 }
 .img-placeholder {
   display: flex;
@@ -78,7 +98,7 @@ const priceText = computed(() => {
 .desc {
   color: #999;
   font-size: 13px;
-  margin: 6px 0;
+  margin: 6px 0 10px;
   height: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -92,10 +112,14 @@ const priceText = computed(() => {
 .price {
   color: #f56c6c;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 15px;
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: #fef2f2;
 }
 .price.free {
-  color: #67c23a;
+  color: #16a34a;
+  background: #f0fdf4;
 }
 .want {
   color: #999;
@@ -104,6 +128,6 @@ const priceText = computed(() => {
 .owner {
   color: #bbb;
   font-size: 12px;
-  margin-top: 6px;
+  margin-top: 8px;
 }
 </style>

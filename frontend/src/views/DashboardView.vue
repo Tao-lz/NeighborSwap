@@ -1,23 +1,40 @@
 <template>
   <div v-loading="loading" class="dash">
     <div class="stats">
-      <el-card class="stat">
-        <div class="stat-num">{{ data.month_published }}</div>
-        <div class="stat-label">本月发布</div>
+      <el-card class="stat" shadow="hover">
+        <div class="stat-inner">
+          <div class="stat-icon c-blue"><el-icon :size="22"><Upload /></el-icon></div>
+          <div class="stat-info">
+            <div class="stat-num">{{ data.month_published }}</div>
+            <div class="stat-label">本月发布</div>
+          </div>
+        </div>
       </el-card>
-      <el-card class="stat">
-        <div class="stat-num">{{ data.month_given }}</div>
-        <div class="stat-label">本月成交</div>
+      <el-card class="stat" shadow="hover">
+        <div class="stat-inner">
+          <div class="stat-icon c-green"><el-icon :size="22"><CircleCheck /></el-icon></div>
+          <div class="stat-info">
+            <div class="stat-num">{{ data.month_given }}</div>
+            <div class="stat-label">本月成交</div>
+          </div>
+        </div>
       </el-card>
-      <el-card class="stat">
-        <div class="stat-num">{{ data.current_available }}</div>
-        <div class="stat-label">当前在售</div>
+      <el-card class="stat" shadow="hover">
+        <div class="stat-inner">
+          <div class="stat-icon c-orange"><el-icon :size="22"><Box /></el-icon></div>
+          <div class="stat-info">
+            <div class="stat-num">{{ data.current_available }}</div>
+            <div class="stat-label">当前在售</div>
+          </div>
+        </div>
       </el-card>
     </div>
 
     <div class="highlights">
-      <el-card class="hl">
-        <template #header>最快被领走的物品</template>
+      <el-card class="hl" shadow="hover">
+        <template #header>
+          <div class="hl-head"><el-icon><Timer /></el-icon>最快被领走的物品</div>
+        </template>
         <div v-if="data.fastest_given">
           <div class="hl-name">{{ data.fastest_given.name }}</div>
           <div class="hl-sub">上架 {{ duration(data.fastest_given) }} 后被领走</div>
@@ -25,8 +42,10 @@
         <el-empty v-else description="暂无成交记录" :image-size="60" />
       </el-card>
 
-      <el-card class="hl">
-        <template #header>最多人想要（尚未成交）</template>
+      <el-card class="hl" shadow="hover">
+        <template #header>
+          <div class="hl-head"><el-icon><StarFilled /></el-icon>最多人想要（尚未成交）</div>
+        </template>
         <div v-if="data.hottest_wanted">
           <div class="hl-name">{{ data.hottest_wanted.name }}</div>
           <div class="hl-sub">{{ data.hottest_wanted.want_count }} 人想要</div>
@@ -81,21 +100,64 @@ onMounted(load)
   margin-bottom: 16px;
 }
 .stat {
-  text-align: center;
+  border: none;
+  border-radius: 12px;
+}
+.stat-inner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.stat-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.c-blue {
+  color: #2563eb;
+  background: #eff6ff;
+}
+.c-green {
+  color: #16a34a;
+  background: #f0fdf4;
+}
+.c-orange {
+  color: #f59e0b;
+  background: #fffbeb;
 }
 .stat-num {
-  font-size: 36px;
+  font-size: 30px;
   font-weight: 700;
-  color: #409eff;
+  color: #1f2937;
+  line-height: 1;
 }
 .stat-label {
-  color: #999;
-  margin-top: 8px;
+  color: #9ca3af;
+  margin-top: 6px;
+  font-size: 13px;
 }
 .highlights {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
+}
+.hl {
+  border: none;
+  border-radius: 12px;
+}
+.hl-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #374151;
+  font-weight: 600;
+}
+.hl-head .el-icon {
+  color: var(--el-color-primary);
 }
 .hl-name {
   font-weight: 600;
@@ -104,5 +166,13 @@ onMounted(load)
 .hl-sub {
   color: #999;
   margin-top: 8px;
+}
+@media (max-width: 640px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+  .highlights {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

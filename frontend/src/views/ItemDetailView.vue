@@ -233,6 +233,15 @@ onMounted(() => {
   display: flex;
   gap: 24px;
 }
+@media (max-width: 640px) {
+  .layout {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .img-box {
+    width: 100%;
+  }
+}
 .img-box {
   width: 320px;
   height: 240px;
